@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>jQuery Mobile Template</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+	<script src='//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js'></script>
+	<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="Brazzers-Carousel/jQuery.Brazzers-Carousel.min.css"> 
+	<script src="Brazzers-Carousel/jQuery.Brazzers-Carousel.min.js"></script>
+<style>
+	.ui-header .ui-title, .ui-footer .ui-title{
+		margin: auto 0;
+	}
+	.thumb-item {
+		display: block;
+		width: 100%;
+		height: 100%;
+		/*justify-content: center;*/
+		margin: auto 0;
+	}
+	li{
+		margin:40px;
+	}
+	.btn{
+		float:right;
+	}
+	i{
+		float:right;
+	}
+	#panel #add{
+		width: 3%;
+	}
+</style>
+</head>
+<body>
+	<!-- PAGE -->
+	<div data-role='page' id='home'>
+		<!-- header -->
+		<div data-role='header' data-position='fixed'>
+			
+			<a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-icon-bars"><i class="fa fa-bars"></i></a>
+			<h1 class="ui-shadow">Home Page</h1>
+			<span class="thumb-item">
+				<img src="img/1.jpg" alt="Alt">
+				<img src="img/2.jpg" alt="Alt">
+				<img src="img/3.jpg" alt="Alt">
+			</span>
+			<span class="thumb-item">
+				<img src="img/4.jpg" alt="Alt">
+				<img src="img/5.jpg" alt="Alt">
+			</span>
+		</div>
+		
+		<div data-role="panel" data-display="reveal" id="myPanel"> 
+		    <h2>Panel Header</h2>
+		    <p>You can close the panel by clicking outside the panel, pressing the Esc key or by swiping.</p>
+		</div> 
+
+		<!-- content -->
+	</div>
+
+	<div data-role='page' id='contact'>
+		<!-- header -->
+		<div data-role='header' data-position='fixed'>
+			<a href="#myPanel" id="panel" class="ui-btn ui-btn-inline ui-corner-all ui-icon-bars"><i class="fa fa-bars"></i></a>
+			<h1>Contact Me</h1>
+		</div>
+		<div data-role="panel" id="myPanel"> 
+		    <h2>Panel Header</h2>
+		    <p>You can close the panel by clicking outside the panel, pressing the Esc key or by swiping.</p>
+		</div> 
+		<!-- content -->
+		<a href="https://www.facebook.com/yue.du.714" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-left">Facebook<i class="fa fa-facebook-official fa-2x"></i></a>
+	    <a href="https://plus.google.com/u/0/+YUEDUTILDA" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-left">Google+<i class="fa fa-google-plus-square fa-2x"></i></a>
+	    <a href="https://www.instagram.com/yuetildadu/" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-left">Instagram<i class="fa fa-instagram fa-2x"></i></a>
+	    <a href="https://github.com/TildaYueDu/TildaYueDu.github.io" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-left">Github<i class="fa fa-github-square fa-2x"></i></a>
+	</div>
+
+
+	<div data-role='page' id='list'>
+		<!-- header -->
+		<div data-role='header' data-position='fixed'>
+			<a href="#myPanel" id="panel" class="ui-btn ui-btn-inline ui-corner-all ui-icon-bars"><i class="fa fa-bars"></i></a>
+			<h1>List Notes</h1>
+			<a href="#new" id="add" class="ui-btn ui-btn-right ui-icon-plus ui-corner-all data-rel="dialog""><i class="fa fa-plus"></i></a>
+		</div>
+		<div data-role="panel" id="myPanel"> 
+		    <h2>Panel Header</h2>
+		    <p>You can close the panel by clicking outside the panel, pressing the Esc key or by swiping.</p>
+		</div> 
+		<!-- content -->
+		<ul data-role='listview' id='todo'></ul>
+		<!-- <a id="submit" class="ui-btn ui-btn-b">Update</a> -->
+	</div>
+	<div data-role='page' id='err'>
+		<p>There must something wrong!</p>
+	</div>
+
+
+	<div data-role='page' id='update'>
+		
+			<div data-role='header' data-position='fixed'>
+				<h1>Add New Item</h1>
+			</div>
+		<form>
+			<input type='text' id='itemID' name='id'/>
+			<input type ="text" id ='upnew' name="text"/>
+			<button id='sub'>Save</button>
+			<button id='cancel'>Cancel</button>
+		</form>		
+	</div>
+
+
+	<div data-role='page' id='new'>
+		<!-- header -->
+		<div data-role='header' data-position='fixed'>
+			<h1>Add New Item</h1>
+		</div>
+		<form>
+			<input type ="text" id ='addnew'/>
+			<button id='save'>Save</button>
+		</form>
+		
+	</div>
+
+	<!-- SCRIPT -->
+	<script>
+		// dynamically adds footer and navbar
+		function loadmenu( page ) {
+			// get handle on page
+			var page = document.querySelector( '#'+page );
+			// check if nav exists
+			if( !page.querySelector('div[data-role=footer]') ) {
+				console.log('nofooter');
+				// create it
+				var foot = document.createElement('div');
+				foot.setAttribute( 'data-role', 'footer' );
+				foot.setAttribute( 'data-position', 'fixed' );
+				var nav = document.createElement('div');
+				nav.setAttribute( 'data-role', 'navbar' );
+				var ul = document.createElement( 'ul' );
+				// LINKS
+				//// HOME
+				var li1 = document.createElement( 'li' );
+				var a = document.createElement( 'a' );
+				a.textContent = 'Home';
+				a.setAttribute( 'href', '#home' );
+				a.setAttribute( 'data-icon', 'home' );
+				a.setAttribute( 'data-transition', 'slide' );
+				li1.appendChild( a );
+				//// ABOUT
+				var li2 = document.createElement( 'li' );
+				var a = document.createElement( 'a' );
+				a.textContent = 'List';
+				a.setAttribute( 'href', '#list' );
+				a.setAttribute( 'data-icon', 'info' );
+				a.setAttribute( 'data-transition', 'slide' );
+				li2.appendChild( a );
+				//// CONTACT
+				var li3 = document.createElement( 'li' );
+				var a = document.createElement( 'a' );
+				a.textContent = 'Contact';
+				a.setAttribute( 'href', '#contact' );
+				a.setAttribute( 'data-icon', 'phone' );
+				a.setAttribute( 'data-transition', 'slide' );
+				li3.appendChild( a );
+				// append links
+				ul.appendChild( li1 );
+				ul.appendChild( li2 );
+				ul.appendChild( li3 );
+				// ul.appendChild( li4 );
+				// append list to nav to foot
+				nav.appendChild( ul );
+				foot.appendChild( nav );
+				page.appendChild( foot );
+				// trigger navbar initialization
+				jQuery(nav).navbar();
+				// trigger proper page creation for footer placement
+				jQuery(page).trigger('create');
+			}
+		}
+
+		// show home
+		$( '#home' ).on( 'pageshow', function(){
+			loadmenu('home');
+			$(".thumb-item").brazzersCarousel();
+		});
+
+		// show contact
+		$( '#contact' ).on( 'pageshow', function(){
+			loadmenu('contact');
+		});
+
+
+		$('#sub').on('click', function(ev){
+			if( ev.preventDefault ) ev.preventDefault();
+			var data = $('#update form').serialize();
+			$('#update form')[0].reset(); 
+			console.log($('#update form')[0]);
+			$.ajax({
+				url: "update.php",
+	            dataType: 'json',
+	            type: 'POST',
+	            data: data
+			}).done( function( data ) {
+				$.mobile.changePage('#list',{transition:'slide'});
+			}).fail(function(data){
+				$.mobile.changePage('#err',{transition:'slide'});
+			});
+		});
+		$('#cancel').on('click', function(){
+			history.back();
+			$.mobile.changePage('#list',{transition:'slide'});
+		});
+
+
+
+		// show list
+		$( '#list' ).on( 'pageshow', function(){
+			// load the menu
+			loadmenu('list');
+			// read the JSON data feed
+			$.ajax({
+				'url' : 'read.php',
+				'dataType' : 'json'
+			}).done( function( xhr ) {
+				if( xhr.message == 'success' ) {
+					$('#todo').html('');
+					// loop over the data
+					for( var i = 0; i < xhr.data.length; i++ ) {
+						var item = document.createElement('li');
+						// item.innerHTML = "<a href='#' data-id='"+xhr.data[i].id+"'><span role='text'>" + xhr.data[i].text + "</span></a>";
+						item.textContent = xhr.data[i].todo;
+						item.setAttribute( 'data-id', xhr.data[i].iid );
+						item.setAttribute( 'data-todo', xhr.data[i].todo );
+						item.setAttribute( 'contenteditable', true );
+						$(item).on('click', function(ev){
+							var id = ev.currentTarget.dataset['id'];
+							$.mobile.changePage('#update');
+							var frm = $ ('#update form');
+							console.log(id);
+							var text = ev.currentTarget.dataset['todo'];
+							console.info(text);
+							$('#upnew',frm).val(text);
+							$('#itemID',frm).val(id);
+						});
+
+						// var x = document.createElement('a');
+						// $(x).addClass('ui-btn ui-shadow ui-corner-all ui-icon-delete delete ui-btn-icon-notext');
+
+						// item.appendChild(x);
+
+						var btn = document.createElement('button');
+						$(btn).addClass('btn');
+						btn.textContent = "x";
+						
+						item.appendChild( btn );
+						// console.log(btn);
+						btn.addEventListener("click", function(e){
+							e.stopPropagation();
+							var parent = e.currentTarget.parentNode;
+							var parentID = parent.getAttribute("data-id");
+							// console.log(parent);
+							var data = {'id':parentID};
+							$.ajax({
+					             url: "delete.php",
+					             dataType: 'json',
+					             type: 'POST',
+					             data: data,
+					             success: function(xhr) {
+					               console.info(xhr);
+					               parent.remove();
+					             },
+					             error: function(xhr, status, err) {
+					                 console.error(xhr);
+					             }
+							});
+
+						});
+						$('#todo').append( item );
+						$('#todo').listview( 'refresh' );
+					}
+
+				}
+			}).fail( function() {
+				console.log( "Sorry" );
+			}).always( function() {
+				//
+			});
+		});
+		
+		
+			
+		// show new
+		// $( '#new' ).on( 'pageshow', function(){
+		// 	loadmenu('new');
+			
+		// });
+
+		// $('#save').click(function(){							
+		// 	console.log("hell");
+		// 	var data = "todo="+ document.querySelector("#addnew").value;
+		// 	var xhr = new XMLHttpRequest();
+		// 	xhr.open('POST','create.php');
+		// 	// set the header type
+		// 	xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+		// 	xhr.send(data);
+		// 	xhr.onreadystatechange = function(){
+		// 	// if everything worked out, then...
+		// 		if(xhr.readyState == 4 && xhr.status == 200){
+		// 			// process the response
+		// 			console.log( xhr.responseText );
+		// 		}
+		// 	}			
+		// })
+		$('#save').click(function(){
+			console.log("hell");
+			var data = "todo="+ document.querySelector("#addnew").value;
+			$.ajax({
+				url: "create.php",
+	            dataType: 'json',
+	            type: 'POST',
+	            data: data,
+	            success: function(xhr) {
+	               console.info(xhr);
+	               history.back();
+	               $.mobile.changePage('#list',{transition:'slide'});
+	            },
+	            error: function(xhr, status, err) {
+	                console.error(xhr);
+	            }			
+			});
+		});
+
+		// $('#update').click(function(e){							
+		// 	console.log("holle");
+		// 	var select = e.currentTarget.parentNode;
+		// 	var selectID = select.getAttribute("data-id");
+		// 	console.log(e.currentTarget);
+		// 	var data = "todo="+ document.querySelector("#todo").value+"&id="+selectID;
+		// 	var xhr = new XMLHttpRequest();
+		// 	xhr.open('POST','update.php');
+		// 	// set the header type
+		// 	xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+		// 	xhr.send(data);
+		// 	xhr.onreadystatechange = function(){
+		// 		if(xhr.readyState == 4 && xhr.status == 200){
+		// 			// process the response
+		// 			console.log( xhr.responseText );
+		// 		}
+		// 	}			
+		// });
+
+		
+		
+
+
+
+	</script>
+</body>
+</html>
